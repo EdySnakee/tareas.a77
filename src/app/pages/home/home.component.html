@@ -1,0 +1,81 @@
+<section class="todoapp">
+  <header class="header">
+    <div class="container">
+      <h1>App de tareas Angular-17</h1>
+      <p>Creamos, editamos, eliminamos y cambiamos estados de manera reactiva</p>
+      <input
+        class="new-todo"
+        placeholder="Agrega una nueva tarea..."
+        autofocus
+        type="text"
+        [formControl]="newTareaCtrl"
+        (keydown.enter)="changeEvent()"
+      />
+    </div>
+  </header>
+  <div class="container todoapp-wrapper">
+    <!-- This section should be hidden by default and shown when there are todos -->
+    <!-- <pre>
+      <code>
+        {{tareas() | json}}
+      </code>
+    </pre> -->
+
+    <section class="main">
+      <ul class="todo-list">
+        <li
+        (dblclick)="editTarea(i)"
+        [class.editing]="tarea.edit && !tarea.completed"
+        [class.completed]="tarea.completed"
+        *ngFor="let tarea of tareasFiltro(); index as i">
+          <div class="view">
+            <input class="toggle" type="checkbox" [checked]="tarea.completed" (change)="updateTarea(i)" />
+            <label>{{tarea.title}}</label>
+            <button class="destroy" (click)="deleteTarea(i)" ></button>
+          </div>
+          <input class="edit" (keydown.enter)="actualizaTarea(i,$event)" [value]="tarea.title" />
+        </li>
+        <!-- <li class="completed">
+          <div class="view">
+            <input class="toggle" type="checkbox" checked />
+            <label>Learn JavaScript</label>
+            <button class="destroy"></button>
+          </div>
+          <input class="edit" value="Learn JavaScript" />
+        </li>
+        <li class="editing">
+          <div class="view">
+            <input class="toggle" type="checkbox" />
+            <label>Make dishes</label>
+            <button class="destroy"></button>
+          </div>
+          <input class="edit" value="Make dishes" />
+        </li> -->
+      </ul>
+    </section>
+    <!-- This footer should be hidden by default and shown when there are todos -->
+    <footer class="footer" *ngIf="tareasFiltro().length > 0">
+      <!-- This should be `0 items left` by default -->
+      <span class="todo-count">
+        <strong>{{tareasFiltro().length}}</strong>
+        <span *ngIf="tareasFiltro().length > 1; else item" > Items</span>
+        <ng-template #item > Item</ng-template>
+      </span>
+      <!-- Remove this if you don't implement routing -->
+      <ul class="filters">
+        <li>
+          <a (click)="changeFiltro('all')" [class.selected]="filtro() == 'all'" >All</a>
+        </li>
+        <li>
+          <a (click)="changeFiltro('pending')" [class.selected]="filtro() == 'pending'" >Pending</a>
+        </li>
+        <li>
+          <a (click)="changeFiltro('completed')" [class.selected]="filtro() == 'completed'" >Completed</a>
+        </li>
+      </ul>
+      <!-- Hidden if no completed items are left ↓ -->
+      <button class="clear-completed">Clear completed</button>
+    </footer>
+    <!-- <h1>{{filtro()}}</h1> -->
+  </div>
+</section>

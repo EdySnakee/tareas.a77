@@ -1,0 +1,110 @@
+<div class="container">
+  <p>labs works!</p>
+  <h2>{{welcome}}</h2>
+  <hr>
+  <h2>{{'Sacate'.repeat(6)}}</h2>
+  <p>La suma de 3 + 3 es = {{3+3}}</p>
+  <p>Este es {{contenido}} que viede desde el {{componente}}</p>
+  <hr>
+  <h4>Asignado valores desde variables</h4>
+  <img style="width: 150px; height:auto" [src]="img" alt="">
+  <input type="text" [value]="nombre()">
+  <button [disabled]="disabled">Click on</button>
+
+  <hr>
+  <h4>Usando un objeto</h4>
+  <p>Color:{{objeto().color}}</p>
+  <p>Numero:{{objeto().numero}}</p>
+
+
+  <hr>
+  <h4>MANEJANDO EVENTOS</h4>
+  <button (click)="clickHandler()">Click me</button>
+  <button (dblclick)="clickHandler()">double me</button>
+  <p>(change)</p>
+  <input type="text" [value]="objeto().color" (change)="changeEvent($event)">
+  <p>(keydown)</p>
+  <input type="number" [value]="objeto().numero" (keydown)="keyEvent($event)">
+
+  <hr>
+  <h4>SIGNALS</h4>
+  <input type="text" [value]="nombre()" (change)="changeEvent($event)">
+  <p>{{nombre()}}</p>
+
+
+  <hr>
+  <h4>DIRECTIVAS DE CONTROL</h4>
+  <ul>
+    <p>Total de elementos: {{tareas().length}}</p>
+    <li *ngFor="let tarea of tareas(); index as i">
+      {{i}} {{tarea}}
+    </li>
+  </ul>
+
+  <hr>
+  <h4>ngIf -> Condicionales</h4>
+  <div *ngIf="1==1" class="">
+    <h2>Contenido..</h2>
+  </div>
+  <!-- // condicional con signal -->
+  <div *ngIf="nombre() === 'snake'" class="">
+    <h2>Contenido.. {{nombre()}}</h2>
+  </div>
+  <!-- // condicional con objeto y signal -->
+  <div *ngIf="objeto().color === 'white' && objeto().numero > 18; else block1" class="">
+    <h2>Contenido desde el objeto... <b>Numero:</b> {{objeto().numero}}</h2>
+  </div>
+  <div *ngIf="objeto().color === 'white'; else block1" class="">
+    <h2>Contenido desde el objeto... <b>Numero:</b> {{objeto().numero}}</h2>
+  </div>
+  <!-- TEMPLATE PARA EL ELSE  -->
+  <ng-template #block1>
+    Si una condicion no se cumple, renderiza...
+  </ng-template>
+
+
+  <hr>
+  <h4>switch</h4>
+  <input type="number" [value]="objeto().numero" (change)="changeNumero($event)">
+  <div [ngSwitch]="objeto().numero">
+    <p *ngSwitchCase="5">Mi numero es 5</p>
+    <p *ngSwitchCase="7">Mi numero es 7</p>
+    <p *ngSwitchCase="13">Mi numero es 13</p>
+    <p *ngSwitchDefault>No tengo numero</p>
+
+  </div>
+
+  <hr>
+  <h4>FORMULARIOS REACTIVOS</h4>
+  <input type="color" [formControl]="colorCtrl" name="color">
+  <p>Color: {{colorCtrl.value}}</p>
+
+
+  <hr>
+  <h4>Trabajando con svg</h4>
+  <span for="" class="form control">El color del svg cambia dependiendo el input -> dinamicamente</span>
+  <svg>
+    <g>
+      <rect x="0" y="0" height="100" width="100" [attr.fill]="colorCtrl.value" />
+    </g>
+  </svg>
+  <hr>
+  <h4>TRABAJANDO CON ESTILOS</h4> <span>Si modifiamos el numero, el ancho cambiara, usamos [style.width.px]</span>
+  <input type="number" [formControl]="widthCtrl">
+  <span class="box" [style.width.px]="widthCtrl.value"></span>
+
+  <hr>
+  <h4>TRABAJANDO CON CLASES</h4><span>Usamos [class.show] y validators, para mostrar el error, en caso de que no se cumplan
+    las validaciones seteadas.-
+  </span>
+  <p>
+    <input type="text" [formControl]="nombreCtrl" > <br/>
+    <span class="message-error" [class.show]="nombreCtrl.invalid && nombreCtrl.touched" >El campo es obligatorio</span>
+  </p>
+  <p>
+    <input type="text">
+  </p>
+
+
+
+</div>
